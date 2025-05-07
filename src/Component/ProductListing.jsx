@@ -1,10 +1,24 @@
-// components/ProductListing.js
 import React, { useState, useEffect } from 'react';
-import Header from './Header'; // Import the Header component
+import Header from './Header';
 
 const ProductListing = () => {
+  const filterTitles = [
+    'IDEAL FOR',
+    'OCCASION',
+    'WORK',
+    'FABRIC',
+    'SUITABLE FOR',
+    'RAW MATERIALS',
+    'PATTERN',
+  ];
+
   const [isFilterVisible, setIsFilterVisible] = useState(true);
-  const [openFilters, setOpenFilters] = useState({});
+  const [openFilters, setOpenFilters] = useState(() =>
+    filterTitles.reduce((acc, title) => {
+      acc[title] = false;
+      return acc;
+    }, {})
+  );
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -21,21 +35,10 @@ const ProductListing = () => {
     }));
   };
 
-  const filterTitles = [
-    'IDEAL FOR',
-    'OCCASION',
-    'WORK',
-    'FABRIC',
-    'SUITABLE FOR',
-    'RAW MATERIALS',
-    'PATTERN',
-  ];
-
   return (
     <div className="font-sans">
-      <Header /> {/* Include the Header component */}
+      <Header />
 
-      {/* Header Section */}
       <section className="text-center py-10 px-4">
         <h1 className="text-3xl font-semibold mb-2">DISCOVER OUR PRODUCTS</h1>
         <p className="text-gray-600">
@@ -44,7 +47,6 @@ const ProductListing = () => {
         </p>
       </section>
 
-      {/* Controls */}
       <div className="flex justify-between items-center px-8 py-4 bg-gray-100 text-sm">
         <div><strong>{products.length} ITEMS</strong></div>
         <div
@@ -62,34 +64,38 @@ const ProductListing = () => {
         </select>
       </div>
 
-      {/* Main Content */}
       <div className="flex px-8 py-6">
-        {/* Filters */}
         {isFilterVisible && (
           <aside className="w-1/5 pr-6 space-y-6 text-sm text-gray-700">
             <label>
-              <input type="checkbox" className="mr-2" />
+              <input type="checkbox" className="mr-2 mb-6" />
               <strong>CUSTOMIZABLE</strong>
             </label>
+
             {filterTitles.map((title) => (
-              <div key={title}>
+              <div key={title} className="border-t pt-2">
                 <div
-                  className="font-semibold cursor-pointer flex justify-between items-center border-t pt-2"
+                  className="font-semibold cursor-pointer flex justify-between items-center"
                   onClick={() => toggleFilterSection(title)}
                 >
                   {title}
                   <span className="text-xs">{openFilters[title] ? '▴' : '▾'}</span>
                 </div>
+
                 {openFilters[title] && (
-                  <div className="ml-2 mt-2 space-y-1 text-gray-500">
-                    <label className="block">
+                  <div className="ml-2 mt-2 text-gray-700 space-y-1 text-sm">
+                    <div className="font-medium text-black">All</div>
+                    <div className="text-gray-400 text-xs cursor-pointer underline">
+                      Unselect all
+                    </div>
+                    <label className="block text-gray-600">
                       <input type="checkbox" className="mr-2" /> Men
                     </label>
-                    <label className="block">
+                    <label className="block text-gray-600">
                       <input type="checkbox" className="mr-2" /> Women
                     </label>
-                    <label className="block">
-                      <input type="checkbox" className="mr-2" /> Baby
+                    <label className="block text-gray-600">
+                      <input type="checkbox" className="mr-2" /> Baby & Kids
                     </label>
                   </div>
                 )}
@@ -98,7 +104,6 @@ const ProductListing = () => {
           </aside>
         )}
 
-        {/* Product Grid */}
         <section className={`w-full grid gap-6 ${isFilterVisible ? 'grid-cols-3' : 'grid-cols-4'}`}>
           {products.map((product) => (
             <div key={product.id} className="border p-4 text-center text-sm">

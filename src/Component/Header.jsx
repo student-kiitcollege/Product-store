@@ -1,4 +1,3 @@
-// components/Header.js
 import React from 'react';
 import { CiSearch, CiHeart, CiUser } from 'react-icons/ci';
 import { BsBagDash } from 'react-icons/bs';
@@ -7,7 +6,6 @@ import { IoLogoElectron, IoLogoSlack } from 'react-icons/io5';
 const Header = () => {
   return (
     <div className="font-sans">
-      {/* Top bar */}
       <nav className="bg-black text-red-800 flex justify-evenly text-sm py-2">
         {[...Array(3)].map((_, i) => (
           <div key={i} className="flex items-center gap-2">
@@ -17,7 +15,6 @@ const Header = () => {
         ))}
       </nav>
 
-      {/* Main Navbar */}
       <header className="border-b border-gray-200">
         <nav className="flex items-center justify-between px-8 py-4 relative">
           <IoLogoElectron />
